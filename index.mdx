@@ -1,56 +1,147 @@
 ---
-title: "Introduction"
-description: "Welcome to CheapPay - the HTTP-native payment protocol that transforms your APIs, AI services, and data feeds into instant revenue streams using Solana blockchain. Get started with micropayments in just one line of middleware."
+title: 'Introduction'
+description: 'Welcome to CheapPay - the HTTP-native payment protocol that transforms your APIs, AI services, and data feeds into instant revenue streams using Solana blockchain. Get started with micropayments in just one line of middleware.'
 ---
 
-## Setting up
+## 🚀 Transform Any API Into Revenue
 
-Get your payment-enabled API up and running in minutes
+CheapPay brings Coinbase's x402 payment protocol to Solana, enabling developers to monetize APIs, AI services, and digital content with **micropayments starting at $0.001**. Built for the Solana ecosystem with USDC/SOL support and seamless wallet integration.
 
-<Card title="Start here" icon="rocket" horizontal href="/quickstart">
-  Follow our three step quickstart guide.
+<Card title="Quick Start Guide" icon="rocket" horizontal href="/quickstart">
+  Get your payment-enabled API running in under 5 minutes with our three-step
+  guide.
 </Card>
 
-## Make it yours
+## Why Choose CheapPay?
 
-Design a docs site that looks great and empowers your users.
+**The Problem**: Traditional payment systems require complex backends, user accounts, and have high minimum payments. Existing crypto solutions are built for e-commerce, not APIs.
+
+**Our Solution**: HTTP-native payments using 402 status codes. Your users pay with crypto they already hold, no signups required.
 
 <Columns cols={2}>
-  <Card title="Edit locally" icon="pen-to-square" href="/development">
-    Edit your docs locally and preview them in real time.
+  <Card title="AI & Data APIs" icon="brain" href="/use-cases/ai-apis">
+    Perfect for AI completions, image generation, real-time data feeds, and B2B
+    analytics APIs with instant micropayments.
   </Card>
-  <Card title="Customize your site" icon="palette" href="/essentials/settings">
-    Customize the design and colors of your site to match your brand.
+  <Card title="Content Paywalls" icon="lock" href="/use-cases/content">
+    Monetize premium articles, videos, or digital content with instant crypto
+    payments and zero friction.
   </Card>
-  <Card title="Set up navigation" icon="map" href="/essentials/navigation">
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Micro-services" icon="cubes" href="/use-cases/microservices">
+    Each service component can monetize independently without complex billing
+    systems or backends.
   </Card>
-  <Card title="API documentation" icon="terminal" href="/api-reference/introduction">
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Enterprise Ready" icon="building" href="/use-cases/enterprise">
+    Easy integration into existing systems with TypeScript support and
+    comprehensive documentation.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## Start Building
 
-Everything you need to create world-class documentation.
+Get your payment infrastructure running with minimal setup.
 
 <Columns cols={2}>
-  <Card title="Write with MDX" icon="pen-fancy" href="/essentials/markdown">
-    Use MDX to style your docs pages.
+  <Card title="Express.js Integration" icon="code" href="/integrations/express">
+    Add payment middleware to your Express API with one line of code.
   </Card>
-  <Card title="Code samples" icon="code" href="/essentials/code">
-    Add sample code to demonstrate how to use your product.
+  <Card title="Next.js Middleware" icon="next" href="/integrations/nextjs">
+    Protect your Next.js API routes with built-in payment verification.
   </Card>
-  <Card title="Images" icon="image" href="/essentials/images">
-    Display images and other media.
+  <Card title="Hono Framework" icon="zap" href="/integrations/hono">
+    Lightning-fast payments for edge computing and serverless APIs.
   </Card>
-  <Card title="Reusable snippets" icon="recycle" href="/essentials/reusable-snippets">
-    Write once and reuse across your docs.
+  <Card
+    title="Custom Integration"
+    icon="puzzle-piece"
+    href="/integrations/custom"
+  >
+    Build your own integration using our TypeScript SDK and HTTP protocol.
   </Card>
 </Columns>
 
-## Need inspiration?
+## Core Features
 
-<Card title="See complete examples" icon="stars" href="https://mintlify.com/customers">
-  Browse our showcase of exceptional documentation sites.
+Everything you need for production-ready cryptocurrency payments.
+
+<Columns cols={2}>
+  <Card title="Solana Native" icon="blockchain" href="/features/solana">
+    Built specifically for Solana with USDC, SOL, and custom SPL token support.
+  </Card>
+  <Card title="Multi-Wallet Support" icon="wallet" href="/features/wallets">
+    Works with Phantom, Solflare, Backpack, and all major Solana wallets.
+  </Card>
+  <Card title="Zero Backend" icon="server" href="/features/architecture">
+    No complex payment infrastructure needed - just add middleware and start
+    earning.
+  </Card>
+  <Card
+    title="Instant Settlements"
+    icon="lightning"
+    href="/features/settlements"
+  >
+    Payments settle on-chain in seconds with automatic verification.
+  </Card>
+</Columns>
+
+## Developer Experience
+
+Tools and resources to help you succeed.
+
+<Columns cols={2}>
+  <Card title="TypeScript SDK" icon="typescript" href="/sdk/typescript">
+    Fully typed SDK with intelligent autocompletion and error handling.
+  </Card>
+  <Card title="Live Examples" icon="play" href="/examples">
+    Working code examples for AI APIs, content paywalls, and data services.
+  </Card>
+  <Card title="Testing Tools" icon="flask" href="/testing">
+    Comprehensive testing suite with devnet support and mock payments.
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference">
+    Complete API documentation with request/response examples.
+  </Card>
+</Columns>
+
+## Ready to Monetize?
+
+Join the growing ecosystem of developers earning with CheapPay.
+
+<Card title="See Live Implementations" icon="stars" href="/showcase">
+  Browse real-world examples of AI services, data APIs, and content platforms
+  using CheapPay.
 </Card>
+
+---
+
+## Quick Example
+
+```typescript
+import { solanaPaymentMiddleware } from '@cheapay/x402-express';
+import { TokenMint } from '@cheapay/x402';
+
+// Protect your API endpoint with $0.01 USDC payment
+app.use(
+  '/api/premium-data',
+  solanaPaymentMiddleware({
+    payTo: 'YourSolanaAddressHere',
+    routes: {
+      '/*': {
+        price: '$0.01',
+        network: 'solana-mainnet',
+        mint: TokenMint.USDC.mainnet,
+      },
+    },
+  })
+);
+
+// Your protected endpoint
+app.get('/api/premium-data', (req, res) => {
+  res.json({
+    data: 'Premium content unlocked!',
+    earnings: 'Every call = $0.01 in your wallet',
+  });
+});
+```
+
+**That's it!** Your API now accepts cryptocurrency payments. Users pay with their Solana wallet, and you receive USDC instantly.
