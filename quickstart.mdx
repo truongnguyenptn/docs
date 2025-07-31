@@ -1,5 +1,5 @@
 ---
-title: 'Quickstart'
+title: "Quickstart"
 description: "Get your API accepting Solana payments in under 5 minutes. Start earning from your first API call with CheapPay's one-line middleware integration."
 ---
 
@@ -10,53 +10,57 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
 ### Step 1: Install CheapPay
 
 <AccordionGroup>
-  <Accordion icon="package" title="Choose your package manager">
+  <Accordion title="Choose your package manager" icon="package">
     Install CheapPay using your preferred package manager:
 
     <CodeGroup>
+
     ```bash npm
     npm install @cheapay/x402 @cheapay/x402-express
     ```
+
+    
     ```bash pnpm
     pnpm add @cheapay/x402 @cheapay/x402-express
     ```
+
+    
     ```bash yarn
     yarn add @cheapay/x402 @cheapay/x402-express
     ```
+
     </CodeGroup>
 
     <Note>
       For Next.js projects, use `@cheapay/x402-next` instead of `@cheapay/x402-express`
     </Note>
-
   </Accordion>
-  
-  <Accordion icon="cube" title="Available packages">
+  <Accordion title="Available packages" icon="cube">
     CheapPay provides framework-specific packages for seamless integration:
 
     - **`@cheapay/x402`** - Core types and utilities
     - **`@cheapay/x402-express`** - Express.js middleware
     - **`@cheapay/x402-next`** - Next.js middleware
 
-
-    <Tip>Start with the core package and your framework-specific middleware.</Tip>
-
+    <Tip>
+      Start with the core package and your framework-specific middleware.
+    </Tip>
   </Accordion>
 </AccordionGroup>
 
 ### Step 2: Set up payment middleware
 
 <AccordionGroup>
-  <Accordion icon="code" title="Express.js setup">
+  <Accordion title="Express.js setup" icon="code">
     Add payment protection to your Express API in seconds:
 
     ```typescript
     import express from 'express';
     import { solanaPaymentMiddleware } from '@cheapay/x402-express';
     import { TokenMint } from '@cheapay/x402';
-
+    
     const app = express();
-
+    
     // Protect your premium endpoint with $0.01 USDC payment
     app.use('/api/premium', solanaPaymentMiddleware({
       payTo: 'YourSolanaWalletAddressHere',
@@ -69,7 +73,7 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
         }
       }
     }));
-
+    
     // Your protected endpoint
     app.get('/api/premium/data', (req, res) => {
       res.json({
@@ -77,21 +81,19 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
         data: 'This cost $0.01 USDC to access'
       });
     });
-
+    
     app.listen(3000, () => {
       console.log('💰 Payment-enabled API running on port 3000');
     });
     ```
-
   </Accordion>
-
-  <Accordion icon="next" title="Next.js setup">
+  <Accordion title="Next.js setup" icon="next">
     For Next.js projects, create a `middleware.ts` file:
 
     ```typescript
     import { solanaPaymentMiddleware } from '@cheapay/x402-next';
     import { TokenMint } from '@cheapay/x402';
-
+    
     export const middleware = solanaPaymentMiddleware(
       'YourSolanaWalletAddressHere',
       {
@@ -103,24 +105,25 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
         }
       }
     );
-
+    
     export const config = {
       matcher: ['/api/premium/:path*']
     };
     ```
 
-    <Tip>Your Next.js API routes are now payment-protected automatically!</Tip>
-
+    <Tip>
+      Your Next.js API routes are now payment-protected automatically\!
+    </Tip>
   </Accordion>
 </AccordionGroup>
 
 ### Step 3: Test your integration
 
-<Accordion icon="rocket" title="Start earning from API calls">
+<Accordion title="Start earning from API calls" icon="rocket">
   1. **Start your server** and navigate to your protected endpoint
   2. **See the payment prompt** - CheapPay automatically shows a beautiful paywall
   3. **Connect your Solana wallet** (Phantom, Solflare, or Backpack)
-  4. **Complete the payment** - Users pay $0.01 USDC to access your API
+  4. **Complete the payment** - Users pay \$0.01 USDC to access your API
   5. **Receive instant payment** - USDC appears in your wallet immediately
 
   <Note>
@@ -133,23 +136,18 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
 Now that you have payments working, explore these advanced features:
 
 <CardGroup cols={2}>
-
-<Card title="Configure wallets" icon="wallet" href="/features/wallets">
-  Customize wallet options and user experience.
-</Card>
-
-<Card title="Custom pricing" icon="dollar-sign" href="/features/pricing">
-  Set up dynamic pricing and multiple payment tiers.
-</Card>
-
-<Card title="Analytics dashboard" icon="chart-line" href="/features/analytics">
-  Track earnings and monitor API usage.
-</Card>
-
-<Card title="Production deployment" icon="server" href="/deployment">
-  Deploy your payment-enabled API to production.
-</Card>
-
+  <Card title="Configure wallets" icon="wallet" href="/features/wallets">
+    Customize wallet options and user experience.
+  </Card>
+  <Card title="Custom pricing" icon="dollar-sign" href="/features/pricing">
+    Set up dynamic pricing and multiple payment tiers.
+  </Card>
+  <Card title="Analytics dashboard" icon="chart-line" href="/features/analytics">
+    Track earnings and monitor API usage.
+  </Card>
+  <Card title="Production deployment" icon="server" href="/deployment">
+    Deploy your payment-enabled API to production.
+  </Card>
 </CardGroup>
 
 ## Environment setup
@@ -175,29 +173,16 @@ FACILITATOR_URL=https://api.cheappay.com/v1/x402
 ## Need help?
 
 <CardGroup cols={2}>
-
-<Card
-  title="Telegram Community"
-  icon="message-circle"
-  href="https://t.me/cheapay_io_community"
->
-  Get help from our community and team.
-</Card>
-
-<Card title="View examples" icon="code" href="/examples">
-  Browse working code examples and demos.
-</Card>
-
-<Card title="API Reference" icon="book" href="/api-reference">
-  Detailed documentation for all features.
-</Card>
-
-<Card
-  title="GitHub Issues"
-  icon="github"
-  href="https://github.com/cheapay/x402-solana/issues"
->
-  Report bugs or request features.
-</Card>
-
+  <Card title="Telegram Community" icon="message-circle" href="https://t.me/cheapay_io_community">
+    Get help from our community and team.
+  </Card>
+  <Card title="View examples" icon="code" href="https://github.com/Kai-1209/solana-x402-test">
+    Browse working code examples and demos.
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference">
+    Detailed documentation for all features.
+  </Card>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/cheapay/x402-solana/issues">
+    Report bugs or request features.
+  </Card>
 </CardGroup>
