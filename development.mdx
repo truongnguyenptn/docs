@@ -1,94 +1,322 @@
 ---
 title: 'Development'
-description: 'Preview changes locally to update your docs'
+description: 'Set up your local development environment for building payment-enabled APIs with CheapPay'
 ---
 
 <Info>
-  **Prerequisites**:
-  - Node.js version 19 or higher
-  - A docs repository with a `docs.json` file
+  **Prerequisites**: - Node.js version 18 or higher - A Solana wallet (Phantom,
+  Solflare, or Backpack) - Basic understanding of TypeScript/JavaScript
 </Info>
 
-Follow these steps to install and run Mintlify on your operating system.
+Get your local development environment ready for building with CheapPay and testing Solana payments.
 
 <Steps>
-<Step title="Install the Mintlify CLI">
+<Step title="Clone the CheapPay repository">
 
 ```bash
-npm i -g mint
+git clone https://github.com/cheapay/x402-solana
+cd x402-solana
 ```
+
 </Step>
 
-<Step title="Preview locally">
+<Step title="Install dependencies">
 
-Navigate to your docs directory where your `docs.json` file is located, and run the following command:
+CheapPay uses pnpm for workspace management:
 
 ```bash
-mint dev
+npm install -g pnpm
+pnpm install
 ```
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+</Step>
+
+<Step title="Set up environment variables">
+
+Create a `.env` file in your project root:
+
+```bash
+# Solana network configuration
+SOLANA_NETWORK=solana-devnet
+SOLANA_RPC_URL=https://api.devnet.solana.com
+
+# Your wallet address (for receiving test payments)
+PAYMENT_RECIPIENT=YourSolanaWalletAddressHere
+
+# Optional: Custom facilitator URL for development
+FACILITATOR_URL=http://localhost:3011
+```
+
+</Step>
+
+<Step title="Get devnet tokens">
+
+For testing, you'll need devnet SOL and USDC:
+
+```bash
+# Get devnet SOL
+solana airdrop 2 YourWalletAddress --url devnet
+
+# Get devnet USDC tokens at:
+# https://spl-token-faucet.com/?token-name=USDC-Dev
+```
 
 </Step>
 </Steps>
 
-## Custom ports
+## Running examples locally
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. For example, to run Mintlify on port 3333, use this command:
+CheapPay includes several working examples you can run immediately:
+
+<AccordionGroup>
+  <Accordion title="Express.js API server">
+    ```bash
+    cd examples/typescript/servers/express
+    npm install
+    npm start
+    ```
+    
+    Test your payment-enabled API at `http://localhost:3001/api/premium`
+  </Accordion>
+
+{' '}
+
+<Accordion title="Next.js fullstack application">
+  ```bash cd examples/typescript/fullstack/next npm install npm run dev ```
+  Visit `http://localhost:3000` to see the complete payment flow
+</Accordion>
+
+  <Accordion title="Facilitator service (advanced)">
+    ```bash
+    cd typescript/packages/x402-facilitator
+    npm install
+    npm run dev
+    ```
+    
+    Runs the payment verification service at `http://localhost:3011`
+  </Accordion>
+</AccordionGroup>
+
+## Testing payments
+
+### Devnet testing workflow
+
+<Steps>
+<Step title="Start your development server">
+Run any of the example applications above.
+</Step>
+
+<Step title="Navigate to a protected endpoint">
+  Try accessing a payment-protected route in your browser.
+</Step>
+
+<Step title="Connect your wallet">
+  Use a Solana wallet with devnet enabled (Phantom recommended).
+</Step>
+
+<Step title="Complete the test payment">
+Pay with fake devnet USDC - no real money involved!
+</Step>
+</Steps>
+
+### Testing different scenarios
+
+```typescript
+// Test different price points
+const routes = {
+  '/api/cheap': { price: '$0.001', network: 'solana-devnet' },
+  '/api/premium': { price: '$0.01', network: 'solana-devnet' },
+  '/api/expensive': { price: '$0.10', network: 'solana-devnet' },
+};
+
+// Test different tokens
+import { TokenMint } from '@cheapay/x402';
+
+const usdcRoute = { mint: TokenMint.USDC.devnet };
+const solRoute = {}; // No mint = native SOL payments
+```
+
+## Development tools
+
+### Debugging payments
+
+Enable debug logging to trace payment flows:
 
 ```bash
-mint dev --port 3333
+DEBUG=cheapay:* npm start
 ```
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+### Wallet connections
 
-```md
-Port 3000 is already in use. Trying 3001 instead.
+Test with multiple wallets to ensure compatibility:
+
+- **Phantom**: Most popular Solana wallet
+- **Solflare**: Web and mobile support
+- **Backpack**: Developer-friendly wallet
+- **Coin98**: Multi-chain support
+
+### Network switching
+
+Test across different Solana networks:
+
+```typescript
+const networks = {
+  development: 'solana-devnet',
+  staging: 'solana-testnet',
+  production: 'solana-mainnet',
+};
 ```
 
-## Mintlify versions
+## Contributing to CheapPay
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local preview does not align with the production version, please update the CLI:
+### Development workflow
+
+<Steps>
+<Step title="Fork and clone">
+Fork the repository and create a feature branch:
 
 ```bash
-npm mint update
+git checkout -b feature/your-feature-name
 ```
 
-## Validating links
+</Step>
 
-The CLI can assist with validating links in your documentation. To identify any broken links, use the following command:
+<Step title="Make your changes">
+  Follow our coding standards: - Use TypeScript for type safety - Add tests for
+  new features - Update documentation
+</Step>
+
+<Step title="Test thoroughly">
+```bash
+# Run unit tests
+pnpm test
+
+# Run integration tests with devnet
+
+pnpm test:integration
+
+# Test across all packages
+
+pnpm test:all
+
+````
+</Step>
+
+<Step title="Submit a pull request">
+Include a clear description of your changes and test results.
+</Step>
+</Steps>
+
+### Code formatting
+
+We use Prettier and ESLint for consistent code style:
 
 ```bash
-mint broken-links
-```
+# Auto-format your code
+pnpm format
 
-## Deployment
+# Check for linting issues
+pnpm lint
 
-If the deployment is successful, you should see the following:
-
-<Frame>
-  <img src="/images/checks-passed.png" alt="Screenshot of a deployment confirmation message that says All checks have passed." style={{ borderRadius: '0.5rem' }} />
-</Frame>
-
-## Code formatting
-
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+# Fix auto-fixable issues
+pnpm lint:fix
+````
 
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of the CLI: `npm remove -g mint`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall the CLI: `npm i -g mint`
+  <Accordion title="Error: Wallet connection failed">
+    **Solutions:**
+    1. Ensure your wallet is set to Solana devnet
+    2. Check that you have sufficient SOL for transaction fees
+    3. Try refreshing the page and reconnecting
+    4. Clear browser cache and wallet cache
   </Accordion>
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the `~/.mintlify` folder. Then run `mint dev` again.
+{' '}
+
+<Accordion title="Error: Payment verification failed">
+  **Common causes:** 1. Insufficient devnet USDC balance 2. Network connectivity
+  issues 3. RPC rate limiting **Solutions:** - Get more devnet tokens from the
+  faucet - Switch to a different RPC endpoint - Wait a few seconds and retry
+</Accordion>
+
+  <Accordion title="Error: Transaction timeout">
+    **Solutions:**
+    1. Increase timeout settings in your configuration
+    2. Check Solana network status
+    3. Use a more reliable RPC endpoint
+    
+    ```typescript
+    const config = {
+      maxTimeoutSeconds: 120, // Increase timeout
+      retryAttempts: 3
+    };
+    ```
   </Accordion>
 </AccordionGroup>
 
-Curious about what changed in the latest CLI version? Check out the [CLI changelog](https://www.npmjs.com/package/mintlify?activeTab=versions).
+## Performance optimization
+
+### RPC endpoint selection
+
+Use reliable RPC providers for better performance:
+
+```typescript
+const rpcEndpoints = {
+  'solana-devnet': [
+    'https://api.devnet.solana.com',
+    'https://solana-devnet.g.alchemy.com/v2/your-key',
+    'https://rpc.ankr.com/solana_devnet',
+  ],
+};
+```
+
+### Caching strategies
+
+Implement caching for better user experience:
+
+```typescript
+// Cache successful payments
+const paymentCache = new Map();
+
+// Cache wallet connections
+const walletCache = {
+  lastConnected: null,
+  autoReconnect: true,
+};
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+
+<Card title="Build your first API" icon="code" href="/examples/express">
+  Create a payment-enabled Express API from scratch.
+</Card>
+
+<Card title="Integration guide" icon="puzzle-piece" href="/integrations">
+  Learn about different framework integrations.
+</Card>
+
+<Card title="Production deployment" icon="rocket" href="/deployment">
+  Deploy your payment-enabled API to production.
+</Card>
+
+<Card title="Join our community" icon="users" href="https://linktr.ee/cheapay">
+  Connect with us on all platforms via our Linktree.
+</Card>
+
+<Card
+  title="Telegram Community"
+  icon="message-circle"
+  href="https://t.me/cheapay_io_community"
+>
+  Get help from developers and the CheapPay team.
+</Card>
+
+</CardGroup>
+
+---
+
+**Ready to start building?** Check out our [examples repository](https://github.com/cheapay/x402-solana/tree/main/examples) for complete working implementations.
