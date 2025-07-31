@@ -41,6 +41,9 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
     - **`@cheapay/x402`** - Core types and utilities
     - **`@cheapay/x402-express`** - Express.js middleware
     - **`@cheapay/x402-next`** - Next.js middleware
+    - **`@cheapay/x402-hono`** - Hono framework middleware
+    - **`@cheapay/x402-fetch`** - Fetch API client
+    - **`@cheapay/x402-axios`** - Axios client integration
 
     <Tip>
       Start with the core package and your framework-specific middleware.
@@ -76,7 +79,7 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
     
     // Your protected endpoint
     app.get('/api/premium/data', (req, res) => {
-      res.json({ 
+      res.json({
         message: 'Premium content unlocked!',
         data: 'This cost $0.01 USDC to access'
       });
@@ -87,7 +90,7 @@ Transform your API into a revenue stream with Solana micropayments in minutes.
     });
     ```
   </Accordion>
-  <Accordion title="Next.js setup" icon="code">
+  <Accordion title="Next.js setup" icon="next">
     For Next.js projects, create a `middleware.ts` file:
 
     ```typescript
@@ -166,13 +169,14 @@ FACILITATOR_URL=https://api.cheappay.com/v1/x402
 ```
 
 <Warning>
-  **Security reminder:** Never expose private keys in your code. CheapPay only needs your public wallet address to receive payments.
+  **Security reminder:** Never expose private keys in your code. CheapPay only
+  needs your public wallet address to receive payments.
 </Warning>
 
 ## Need help?
 
 <CardGroup cols={2}>
-  <Card title="Join our Discord" icon="discord" href="https://discord.gg/cheappay">
+  <Card title="Telegram Community" icon="telegram" href="https://t.me/cheapay_io_community">
     Get help from our community and team.
   </Card>
   <Card title="View examples" icon="code" href="/examples">
