@@ -8,8 +8,8 @@
     "dark": "#15803D"
   },
    "logo": {
-    "light": "/logo/logo.svg",
-    "dark": "/logo/logo.svg",
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
     "href": "https://cheapay.io"
   },
   "favicon": "/favicon.svg",
