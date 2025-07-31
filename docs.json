@@ -62,13 +62,13 @@
         },
         {
           "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "href": "https://t.me/cheapay_io_community⁩",
+          "icon": "telegram"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Ideas",
+          "href": "https://www.cheapay.io/ideas",
+          "icon": "idea"
         }
       ]
     }
